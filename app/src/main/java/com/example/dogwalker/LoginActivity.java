@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail,etPass,etName;
     private Button btnCancel,btnLogin;
 
-/*
+/* 수정중
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
     private static final int REQ_ONE_TAP = 2;
