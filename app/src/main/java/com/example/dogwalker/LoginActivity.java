@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                   public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful())
                       {
-                          //로그인정보를 SharedPreferences에 저장
+                          //로그인정보를 SharedPreferences에 저장.
                           LoginSharedPreferencesManager.setLoginInfo(LoginActivity.this, strEmail ,StrPass);
                           
                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
