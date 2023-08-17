@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -35,11 +36,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
-
+    SharedPreferences shp;
+    SharedPreferences.Editor shpEditor;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
     private EditText etEmail,etPass,etName;
     private Button btnCancel,btnLogin;
+
 
 /* 수정중
     private SignInClient oneTapClient;
@@ -153,6 +156,9 @@ public class LoginActivity extends AppCompatActivity {
                   public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful())
                       {
+                          //로그인정보를 SharedPreferences에 저장
+                          LoginSharedPreferencesManager.setLoginInfo(LoginActivity.this, strEmail ,StrPass);
+                          
                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
 
