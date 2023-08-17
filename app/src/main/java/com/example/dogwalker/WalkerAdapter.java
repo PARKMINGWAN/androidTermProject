@@ -53,7 +53,7 @@ public class WalkerAdapter
                         R.layout.item_basicinfo, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setView(dialogView);
-                builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("수정.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
