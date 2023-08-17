@@ -31,7 +31,7 @@ btnLogout=findViewById(R.id.btnLogout);
         }
 
 
-        if (loginInfo.get("email").length()==0) //로그 아웃 상태
+        if (loginInfo.get("email").length()==0) //로그 아웃 상태.
         {
             btnSignPage.setVisibility(View.VISIBLE);
             btnJoinPage.setVisibility(View.VISIBLE);
