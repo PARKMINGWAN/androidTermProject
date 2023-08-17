@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnJoinPage =findViewById(R.id.btnJoinPage);
         btnSignPage =findViewById(R.id.btnSignInPage);
-
-
         btnJoinPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

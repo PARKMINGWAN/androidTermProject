@@ -12,16 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DogWalker"
         tools:targetApi="31">
-
         <activity
-            android:name=".WalkerMyPage"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".MyPage"
+            android:exported="false" />
         <activity
             android:name=".UserAccount"
             android:exported="false" />
