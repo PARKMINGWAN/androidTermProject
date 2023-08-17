@@ -35,6 +35,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences shp;
     SharedPreferences.Editor shpEditor;
@@ -142,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         etPass = findViewById(R.id.etUserPass);
         mAuth = FirebaseAuth.getInstance();
       btnLogin =findViewById(R.id.btnSignIn);
+      btnCancel =findViewById(R.id.btnCancel);
 
 
 
@@ -162,6 +165,8 @@ public class LoginActivity extends AppCompatActivity {
                           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
 
+
+
                           finish();
                       }
                       else {
@@ -177,6 +182,16 @@ public class LoginActivity extends AppCompatActivity {
 
           }
       });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+
+                finish();
+            }
+        });
 
 
 
