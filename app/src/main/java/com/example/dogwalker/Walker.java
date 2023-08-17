@@ -9,6 +9,10 @@ public class Walker {
     private String career;
     private String nurture;
 
+    private int img;
+
+
+
     public Walker() {
     }
 
@@ -68,6 +72,11 @@ public class Walker {
         this.nurture = nurture;
     }
 
+    public int getImg() {
+        return img;
+    }
 
-
+    public void setImg(int img) {
+        this.img = img;
+    }
 }

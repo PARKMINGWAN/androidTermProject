@@ -14,6 +14,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/imgWalker"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:src="@drawable/walker"/>
@@ -25,21 +26,21 @@
             android:layout_gravity="center">
 
             <TextView
-                android:id="@+id/txtWalkerName"
+                android:id="@+id/walkerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="name"/>
 
             <TextView
-                android:id="@+id/txtNurture"
+                android:id="@+id/walkerNurture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="nurture" />
 
             <TextView
-                android:id="@+id/txtCareer"
+                android:id="@+id/walkerCareer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
