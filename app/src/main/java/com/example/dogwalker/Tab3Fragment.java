@@ -1,13 +1,22 @@
 package com.example.dogwalker;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +24,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class Tab3Fragment extends Fragment {
+    WalkerAdapter walkerAdapter;
+    private List<Walker> walkerList;
+    RecyclerView recyclerView1;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +63,7 @@ public class Tab3Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,7 +74,55 @@ public class Tab3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab3, container, false);
+        View view =  inflater.inflate(R.layout.fragment_tab3, container, false);
+        Button btnInsert = view.findViewById(R.id.btnInsert);
+        walkerList = new ArrayList<>();
+        walkerAdapter = new WalkerAdapter(walkerList);
+        recyclerView1 = view.findViewById(R.id.recyclerView1);
+
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL,
+                false);
+        recyclerView1.setLayoutManager(linearLayoutManager);
+        recyclerView1.setAdapter(walkerAdapter);
+
+        btnInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View dialogView = LayoutInflater.from(view.getContext())
+                        .inflate(R.layout.item_basicinfo, null);
+                EditText etName = dialogView.findViewById(R.id.etName);
+                EditText etId = dialogView.findViewById(R.id.etId);
+                EditText etPwd = dialogView.findViewById(R.id.etPwd);
+                EditText etTel = dialogView.findViewById(R.id.etTel);
+                EditText etAddr = dialogView.findViewById(R.id.etAddr);
+                EditText etCareer = dialogView.findViewById(R.id.etCareer);
+                EditText etNurture = dialogView.findViewById(R.id.etNurture);
+                Log.d("BtnInsert click",dialogView.toString());
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setView(dialogView);
+                builder.setNegativeButton("취소",null);
+                etId.setText(LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
+                etPwd.setText(LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
+                builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Walker walker = new Walker();
+                        walker.setName("이름 : " + etName.getText().toString());
+                        walker.setId("아이디 : "+ LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
+                        walker.setPwd("패스워드 : " + LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
+                        walker.setTel("전화번호 : " + etTel.getText().toString());
+                        walker.setAddr("주소 : " + etAddr.getText().toString());
+                        walker.setCareer("산책 경력 : " + etCareer.getText().toString());
+                        walker.setNurture("양육 유무 : " + etNurture.getText().toString());
+                        walkerAdapter.addItem(walker);
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        return view;
     }
 }
 
