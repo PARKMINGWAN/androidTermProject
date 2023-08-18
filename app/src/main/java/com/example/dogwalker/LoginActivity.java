@@ -101,14 +101,17 @@ public class LoginActivity extends AppCompatActivity {
                           //로그인정보를 SharedPreferences에 저장.
                           LoginSharedPreferencesManager.setLoginInfo(LoginActivity.this, strEmail ,StrPass);
                           
-                          Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                          Intent intent = new Intent(LoginActivity.this,MainActivity_tab.class);
+                          Log.d("intent 화면 전환",intent.toString());
+                          startActivity(intent);
 
 
 
-                          finish();
+
+
                       }
                       else {
+
 
                       }
                   }

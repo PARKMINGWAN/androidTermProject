@@ -22,8 +22,9 @@ import java.util.List;
 public class WalkerMyPage extends AppCompatActivity {
     private List<Walker> walkerList;
     WalkerAdapter walkerAdapter;
-    RecyclerView recyclerView1,recyclerView2;
-
+    RecyclerView recyclerView1;
+    DatabaseReference mDatabase;
+    private Walker walker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,9 @@ public class WalkerMyPage extends AppCompatActivity {
         recyclerView1.setAdapter(walkerAdapter);
 //        recyclerView2.setLayoutManager(linearLayoutManager1);
 //        recyclerView2.setAdapter(null);
-
+        /*mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.getDatabase();
+*/
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,9 +64,15 @@ public class WalkerMyPage extends AppCompatActivity {
                 EditText etName = dialogView.findViewById(R.id.etName);
                 EditText etId = dialogView.findViewById(R.id.etId);
                 EditText etPwd = dialogView.findViewById(R.id.etPwd);
+                EditText etTel = dialogView.findViewById(R.id.etTel);
+                EditText etAddr = dialogView.findViewById(R.id.etAddr);
+                EditText etCareer = dialogView.findViewById(R.id.etCareer);
+                EditText etNurture = dialogView.findViewById(R.id.etNurture);
                 Log.d("BtnInsert click",dialogView.toString());
                 AlertDialog.Builder builder = new AlertDialog.Builder(WalkerMyPage.this);
                 builder.setView(dialogView);
+                etId.setText(LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("email"));
+                etPwd.setText(LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("password"));
                 builder.setNegativeButton("취소",null);
                 builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
                     @Override
@@ -71,12 +80,13 @@ public class WalkerMyPage extends AppCompatActivity {
                         Walker walker = new Walker();
                         walker.setName("이름 : " + etName.getText().toString());
                         walker.setId("아이디 : "+LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("email"));
-                        walker.setPwd("패스워드 : " + etPwd.getText().toString());
-                        Log.d("insert",walker.getName().toString());
+                        walker.setPwd("패스워드 : " + LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("password"));
+                        walker.setTel("전화번호 : " + etTel.getText().toString());
+                        walker.setAddr("주소 : " + etAddr.getText().toString());
+                        walker.setCareer("산책 경력 : " + etCareer.getText().toString());
+                        walker.setNurture("양육 유무 : " + etNurture.getText().toString());
                         walkerAdapter.addItem(walker);
                         Log.d("아이디 저장", LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("email"));
-
-
                     }
                 });
                 builder.show();

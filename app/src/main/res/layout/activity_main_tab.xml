@@ -1,60 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@android:id/tabhost"
+    android:orientation="vertical"
     tools:context=".MainActivity_tab">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/layout_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tabGravity="center"
+        app:tabMode="scrollable"
+        app:tabTextColor="#000000"
+        app:tabSelectedTextColor="#F0E91E6C"
+        app:tabIndicatorColor="#7537FC"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent"/>
 
-
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:id="@+id/tabHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabMap"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabMyPage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TabWidget>
-
-
-
-    </LinearLayout>
-
-</TabHost>
+</LinearLayout>
