@@ -75,8 +75,6 @@ public class OwnerList extends AppCompatActivity {
         });
         builder.setNegativeButton("닫기", null);
         builder.show();
-
-
     }
 
 }
