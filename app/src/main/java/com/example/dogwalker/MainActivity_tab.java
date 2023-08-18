@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class MainActivity_tab extends AppCompatActivity {
     RecyclerView recyclerView;
     private List<Walker> walkerList;
     WalkerAdapter walkerAdapter;
+    Tab3Fragment tab3Fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class MainActivity_tab extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.layout_tab);
         ViewPager2 viewPager2 = findViewById(R.id.pager_content);
+      //  Button btnInsert  = findViewById(R.id.btnInsert);
 
         ContentPagerAdapter contentPagerAdapter
                 = new ContentPagerAdapter(this);
@@ -48,10 +52,6 @@ public class MainActivity_tab extends AppCompatActivity {
 
             }
         }).attach();
-
-
-
-
 
     }
 }
