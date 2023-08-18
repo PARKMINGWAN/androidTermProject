@@ -28,6 +28,8 @@
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:padding="10dp"
+        android:textColorHint="#9A9A9A"
+        android:enabled="false"
         android:background="@android:color/transparent"/>
 
     <View
@@ -41,6 +43,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Pass Word"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@android:color/transparent"/>
+
+    <View
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <EditText
+        android:id="@+id/etTel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tel"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@android:color/transparent"/>
+
+    <View
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <EditText
+        android:id="@+id/etAddr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@android:color/transparent"/>
+
+    <View
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <EditText
+        android:id="@+id/etCareer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Career"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@android:color/transparent"/>
+
+    <View
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <EditText
+        android:id="@+id/etNurture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nurture"
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:padding="10dp"

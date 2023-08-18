@@ -1,5 +1,8 @@
 package com.example.dogwalker;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Walker {
     private String name;
     private String id;
@@ -14,6 +17,9 @@ public class Walker {
 
 
     public Walker() {
+    }
+
+    public Walker(String name, String tel) {
     }
 
     public String getName() {
