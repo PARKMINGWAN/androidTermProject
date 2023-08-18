@@ -1,5 +1,6 @@
 package com.example.dogwalker;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyViewHolder> {
-    private static List<Walker> walkerList;
+    private List<Walker> walkerList;
 
-    public OwnerListAdapter() {
+
+    public OwnerListAdapter(List<Walker> walkerList) {
         this.walkerList = walkerList;
+    }
+
+    public void addItem(Walker walker) {
+        walkerList.add(walker);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -33,13 +40,13 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
         holder.walkerName.setText(walker.getName());
         holder.walkerNurture.setText(walker.getNurture());
         holder.walkerCareer.setText(walker.getCareer());
-        holder.imgWalker.setImageResource(walker.getImg());
+        holder.imgWalker.setImageResource(R.drawable.walker);
 
     }
 
     @Override
     public int getItemCount() {
-        return walkerList == null ? 0 : walkerList.size();
+        return walkerList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
