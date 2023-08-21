@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 public class WalkerAdapter
-        extends RecyclerView.Adapter<WalkerAdapter.ViewHolder> {
+        {
     DatabaseReference mDatabase;
     private List<Walker> walkerList;
     public WalkerAdapter(List<Walker> walkerList){
@@ -37,7 +37,7 @@ public class WalkerAdapter
     }
 
 
-    public void findAll() {
+   /* public void findAll() {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -47,7 +47,7 @@ public class WalkerAdapter
         Log.d("Query",myTopPostsQuery.toString());
 
 
-    }
+    }*/
 
    public void addItem(Walker walker){
        mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -71,7 +71,7 @@ public class WalkerAdapter
        mDatabase.child(userId).setValue(walker.getNurture().toString());*/
        walkerList.add(walker);
 
-       notifyDataSetChanged();
+
    }
 
 
@@ -80,36 +80,5 @@ public class WalkerAdapter
 
 
 
-    @NonNull
-    @Override
-    public WalkerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_tab3,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
-    }
 
-    @Override
-    public void onBindViewHolder(@NonNull WalkerAdapter.ViewHolder holder,
-                                 int position) {
-       // Walker walker = walkerList.get(position);
-
-
-
-    }
-
-    @Override
-    public int getItemCount() {
-        Log.d("WalkerListSize",Integer.toString(walkerList.size()));
-        return walkerList == null ? 0 : walkerList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-
-        }
-    }
 }
