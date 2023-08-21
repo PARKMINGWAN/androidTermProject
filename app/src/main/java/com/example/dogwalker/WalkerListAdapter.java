@@ -1,47 +1,39 @@
 package com.example.dogwalker;
 
-import android.content.DialogInterface;
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyViewHolder> {
-    DatabaseReference database;
-
+public class WalkerListAdapter extends RecyclerView.Adapter<WalkerListAdapter.MyViewHolder> {
     List<Owner> ownerList = new ArrayList<Owner>();
 
     @NonNull
     @Override
-    public OwnerListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public WalkerListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.walkerlist_profile, parent, false);
-        return new OwnerListAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OwnerListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull WalkerListAdapter.MyViewHolder holder, int position) {
         Owner owner = ownerList.get(position);
         holder.setItem(owner);
 
     }
 
-    public OwnerListAdapter(List<Owner> ownerList) {
+    public WalkerListAdapter(List<Owner> ownerList) {
         this.ownerList = ownerList;
         notifyDataSetChanged();
     }
