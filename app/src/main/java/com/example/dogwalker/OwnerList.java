@@ -22,12 +22,12 @@ public class OwnerList extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        ownerList = new ArrayList<>();
-        WalkerListAdapter walkerListAdapter = new WalkerListAdapter(ownerList);
+        ownerList = new ArrayList<Owner>();
+        OwnerListAdapter ownerListAdapter = new OwnerListAdapter(ownerList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( OwnerList.this,
                 RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(walkerListAdapter);
+        recyclerView.setAdapter(ownerListAdapter);
 
         for (int i = 0; i < ownerList.size(); i++) {
             if (i % 2 == 0) {
