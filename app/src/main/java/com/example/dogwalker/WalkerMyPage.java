@@ -30,7 +30,7 @@ public class WalkerMyPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walker_my_page);
-        recyclerView1 = findViewById(R.id.recyclerView1);
+       // recyclerView1 = findViewById(R.id.recyclerView1);
        // recyclerView2 = findViewById(R.id.recyclerView2);
         Button btnInsert = findViewById(R.id.btnInsert);
 

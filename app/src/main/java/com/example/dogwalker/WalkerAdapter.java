@@ -20,8 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -32,7 +35,19 @@ public class WalkerAdapter
     public WalkerAdapter(List<Walker> walkerList){
         this.walkerList = walkerList;
     }
-    private OnItemClickListener onItemClickListener;
+
+
+    public void findAll() {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        Query myTopPostsQuery = mDatabase.equalTo(uid);
+        Log.d("UID",uid);
+        Log.d("Query",myTopPostsQuery.toString());
+
+
+    }
 
    public void addItem(Walker walker){
        mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -60,13 +75,8 @@ public class WalkerAdapter
    }
 
 
-    public interface  OnItemClickListener{
-        void onItemClick(int pos);
-    }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener = onItemClickListener;
-    }
+
 
 
 
@@ -74,71 +84,17 @@ public class WalkerAdapter
     @Override
     public WalkerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.basic_info_list,parent,false);
-        ViewHolder viewHoler = new ViewHolder(view);
-        return viewHoler;
+                .inflate(R.layout.fragment_tab3,parent,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull WalkerAdapter.ViewHolder holder,
                                  int position) {
-        Walker walker = walkerList.get(position);
-
-        holder.txtName.setText(walker.getName().toString());
-        holder.txtId.setText(walker.getId().toString());
-        holder.txtPwd.setText(walker.getPwd().toString());
-        holder.txtTel.setText(walker.getTel().toString());
-        holder.txtAddr.setText(walker.getAddr().toString());
-        holder.txtCareer.setText(walker.getCareer().toString());
-        holder.txtNurture.setText(walker.getNurture().toString());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View dialogView = view.inflate(view.getContext(),
-                        R.layout.item_basicinfo, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setView(dialogView);
-                EditText etName = dialogView.findViewById(R.id.etName);
-                EditText etId = dialogView.findViewById(R.id.etId);
-                EditText etPwd = dialogView.findViewById(R.id.etPwd);
-                EditText etTel = dialogView.findViewById(R.id.etTel);
-                EditText etAddr = dialogView.findViewById(R.id.etAddr);
-                EditText etCareer = dialogView.findViewById(R.id.etCareer);
-                EditText etNurture = dialogView.findViewById(R.id.etNurture);
-                etName.setText(walker.getName());
-                etId.setText(walker.getId());
-                etPwd.setText(walker.getPwd());
-                etTel.setText(walker.getTel());
-                etAddr.setText(walker.getAddr());
-                etCareer.setText(walker.getCareer());
-                etNurture.setText(walker.getNurture());
+       // Walker walker = walkerList.get(position);
 
 
-                builder.setPositiveButton("수정.", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        walker.setName(etName.getText().toString());
-                        walker.setId(etId.getText().toString());
-                        walker.setPwd(etPwd.getText().toString());
-                        walker.setTel(etTel.getText().toString());
-                        walker.setAddr(etAddr.getText().toString());
-                        walker.setCareer( etCareer.getText().toString());
-                        walker.setNurture( etNurture.getText().toString());
-                        addItem(walker);
-
-                    }
-                });
-                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                builder.show();
-
-            }
-        });
 
     }
 
@@ -149,25 +105,9 @@ public class WalkerAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName, txtId, txtPwd,txtTel,txtAddr,txtCareer,txtNurture;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
-            txtId = itemView.findViewById(R.id.txtId);
-            txtPwd = itemView.findViewById(R.id.txtPwd);
-            txtTel = itemView.findViewById(R.id.txtTel);
-            txtAddr = itemView.findViewById(R.id.txtAddr);
-            txtCareer = itemView.findViewById(R.id.txtCareer);
-            txtNurture = itemView.findViewById(R.id.txtNurture);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    onItemClickListener.onItemClick(position);
-                }
-            });
-
 
 
         }
