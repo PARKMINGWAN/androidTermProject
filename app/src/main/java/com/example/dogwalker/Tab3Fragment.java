@@ -115,7 +115,7 @@ public class Tab3Fragment extends Fragment {
                         walker.setAddr("주소 : " + etAddr.getText().toString());
                         walker.setCareer("산책 경력 : " + etCareer.getText().toString());
                         walker.setNurture("양육 유무 : " + etNurture.getText().toString());
-                        walkerAdapter.addItem(walker,view.getContext());
+                        walkerAdapter.addItem(walker);
                     }
                 });
                 builder.show();

@@ -31,17 +31,19 @@ public class WalkerAdapter
     }
     private OnItemClickListener onItemClickListener;
 
-   public void addItem(Walker walker, Context context){
+   public void addItem(Walker walker){
 
        mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
        mDatabase.child("Id").setValue(walker.getId().toString());
-       /*mDatabase.child(userId).child("userId").setValue(walker.getId());
-       mDatabase.child(userId).child("userId").setValue(walker.getId());
-       mDatabase.child(userId).child("userId").setValue(walker.getId());
-       mDatabase.child(userId).child("userId").setValue(walker.getId());
-       mDatabase.child(userId).child("userId").setValue(walker.getId());
-*/
+
+       mDatabase.child("Id").child("Name").setValue(walker.getName().toString());
+       mDatabase.child("Id").child("PassWord").setValue(walker.getPwd().toString());
+       mDatabase.child("Id").child("Tel").setValue(walker.getTel().toString());
+       mDatabase.child("Id").child("Address").setValue(walker.getAddr().toString());
+       mDatabase.child("Id").child("Career").setValue(walker.getCareer().toString());
+       mDatabase.child("Id").child("Nurture").setValue(walker.getNurture().toString());
+
 /*
        mDatabase.child(userId).setValue(walker.getName().toString());
        mDatabase.child(userId).setValue(walker.getAddr().toString());
@@ -119,7 +121,7 @@ public class WalkerAdapter
                         walker.setAddr(etAddr.getText().toString());
                         walker.setCareer( etCareer.getText().toString());
                         walker.setNurture( etNurture.getText().toString());
-                        addItem(walker, dialogView.getContext());
+                        addItem(walker);
 
                     }
                 });
