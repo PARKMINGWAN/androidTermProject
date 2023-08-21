@@ -85,7 +85,7 @@ public class WalkerMyPage extends AppCompatActivity {
                         walker.setAddr("주소 : " + etAddr.getText().toString());
                         walker.setCareer("산책 경력 : " + etCareer.getText().toString());
                         walker.setNurture("양육 유무 : " + etNurture.getText().toString());
-                        walkerAdapter.addItem(walker);
+                       // walkerAdapter.addItem(walker,WalkerMyPage.this);
                         Log.d("아이디 저장", LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("email"));
                     }
                 });

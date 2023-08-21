@@ -1,5 +1,6 @@
 package com.example.dogwalker;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,20 +31,25 @@ public class WalkerAdapter
     }
     private OnItemClickListener onItemClickListener;
 
-   public void addItem(Walker walker){
-       mDatabase = FirebaseDatabase.getInstance().getReference();
-       mDatabase.setValue(walker.getName().toString());
-       mDatabase.setValue(walker.getAddr().toString());
-       mDatabase.setValue(walker.getTel().toString());
-       mDatabase.setValue(walker.getCareer().toString());
-       mDatabase.setValue(walker.getNurture().toString());
-       walkerList.add(walker);
-       mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-           @Override
-           public void onComplete(@NonNull Task<DataSnapshot> task) {
+   public void addItem(Walker walker, Context context){
 
-           }
-       });
+       mDatabase = FirebaseDatabase.getInstance().getReference("users");
+
+       mDatabase.child("Id").setValue(walker.getId().toString());
+       /*mDatabase.child(userId).child("userId").setValue(walker.getId());
+       mDatabase.child(userId).child("userId").setValue(walker.getId());
+       mDatabase.child(userId).child("userId").setValue(walker.getId());
+       mDatabase.child(userId).child("userId").setValue(walker.getId());
+       mDatabase.child(userId).child("userId").setValue(walker.getId());
+*/
+/*
+       mDatabase.child(userId).setValue(walker.getName().toString());
+       mDatabase.child(userId).setValue(walker.getAddr().toString());
+       mDatabase.child(userId).setValue(walker.getTel().toString());
+       mDatabase.child(userId).setValue(walker.getCareer().toString());
+       mDatabase.child(userId).setValue(walker.getNurture().toString());*/
+       walkerList.add(walker);
+
        notifyDataSetChanged();
    }
 
@@ -113,7 +119,7 @@ public class WalkerAdapter
                         walker.setAddr(etAddr.getText().toString());
                         walker.setCareer( etCareer.getText().toString());
                         walker.setNurture( etNurture.getText().toString());
-                        addItem(walker);
+                        addItem(walker, dialogView.getContext());
 
                     }
                 });
