@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,8 +24,6 @@ import java.util.List;
 public class WalkerAdapter
         extends RecyclerView.Adapter<WalkerAdapter.ViewHolder> {
     DatabaseReference mDatabase;
-
-
     private List<Walker> walkerList;
     public WalkerAdapter(List<Walker> walkerList){
         this.walkerList = walkerList;
@@ -37,6 +38,12 @@ public class WalkerAdapter
        mDatabase.setValue(walker.getCareer().toString());
        mDatabase.setValue(walker.getNurture().toString());
        walkerList.add(walker);
+       mDatabase.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+           }
+       });
        notifyDataSetChanged();
    }
 
