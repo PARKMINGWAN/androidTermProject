@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -41,6 +38,8 @@ public class Tab3Fragment extends Fragment {
     private List<Walker> walkerList;
     Walker walker;
     DatabaseReference mDatabase;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -122,7 +121,7 @@ public class Tab3Fragment extends Fragment {
         recyclerView1.setLayoutManager(linearLayoutManager);
         recyclerView1.setAdapter(walkerAdapter);*/
 
-      findAll();
+      //findAll();
 
 
 
@@ -154,23 +153,23 @@ public class Tab3Fragment extends Fragment {
                 builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        walker.setName(etName.getText().toString());
-                        walker.setId(etId.getText().toString());
-                        walker.setPwd(etPwd.getText().toString());
-                        walker.setTel(etTel.getText().toString());
-                        walker.setAddr(etAddr.getText().toString());
-                        walker.setCareer(etCareer.getText().toString());
-                        walker.setNurture(etNurture.getText().toString());
-
-                        txtId.setText(etId.getText().toString());
-                        txtName.setText(etId.getText().toString());
-                        txtPwd.setText(etId.getText().toString());
-                        txtAddr.setText(etId.getText().toString());
-                        txtTel.setText(etId.getText().toString());
-                        txtCareer.setText(etId.getText().toString());
-                        txtNurture.setText(etId.getText().toString());
-
-                        addItem(walker);
+//                        walker.setName(etName.getText().toString());
+//                        walker.setId(etId.getText().toString());
+//                        walker.setPwd(etPwd.getText().toString());
+//                        walker.setTel(etTel.getText().toString());
+//                        walker.setAddr(etAddr.getText().toString());
+//                        walker.setCareer(etCareer.getText().toString());
+//                        walker.setNurture(etNurture.getText().toString());
+//
+//                        txtId.setText(etId.getText().toString());
+//                        txtName.setText(etId.getText().toString());
+//                        txtPwd.setText(etId.getText().toString());
+//                        txtAddr.setText(etId.getText().toString());
+//                        txtTel.setText(etId.getText().toString());
+//                        txtCareer.setText(etId.getText().toString());
+//                        txtNurture.setText(etId.getText().toString());
+//
+//                        addItem(walker);
                     }
                 });
                 builder.show();
@@ -179,10 +178,32 @@ public class Tab3Fragment extends Fragment {
         });
 
 
+
+
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("BtnInsert click",dialogView.toString());
+                mDatabase = FirebaseDatabase.getInstance().getReference("users");
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+
+                //전체보기
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("snapshot : ", snapshot.toString() );
+                        //Walker value = snapshot.getValue(Walker.class);
+                        //txtAddr.setText(value.getAddr().toString());
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setView(dialogView);
                 builder.setNegativeButton("취소",null);
@@ -191,65 +212,83 @@ public class Tab3Fragment extends Fragment {
                 builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Walker walker = new Walker();
-                        walker.setName("이름 : " + etName.getText().toString());
-                        walker.setId("아이디 : "+ LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
-                        walker.setPwd("패스워드 : " + LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
-                        walker.setTel("전화번호 : " + etTel.getText().toString());
-                        walker.setAddr("주소 : " + etAddr.getText().toString());
-                        walker.setCareer("산책 경력 : " + etCareer.getText().toString());
-                        walker.setNurture("양육 유무 : " + etNurture.getText().toString());
-                        addItem(walker);
+
+
+
+                        mDatabase.child(uid).child("userId").setValue(etName.getText().toString());
+                        mDatabase.child(uid).child("Name").setValue(etId.getText().toString());
+                        mDatabase.child(uid).child("PassWord").setValue(etPwd.getText().toString());
+                        mDatabase.child(uid).child("Address").setValue(etAddr.getText().toString());
+                        mDatabase.child(uid).child("Tel").setValue(etTel.getText().toString());
+                        mDatabase.child(uid).child("Career").setValue(etCareer.getText().toString());
+                        mDatabase.child(uid).child("Nurture").setValue(etNurture.getText().toString());
+
+
+
+//                        Walker walker = new Walker();
+//                        walker.setName("이름 : " + etName.getText().toString());
+//                        walker.setId("아이디 : "+ LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
+//                        walker.setPwd("패스워드 : " + LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
+//                        walker.setTel("전화번호 : " + etTel.getText().toString());
+//                        walker.setAddr("주소 : " + etAddr.getText().toString());
+//                        walker.setCareer("산책 경력 : " + etCareer.getText().toString());
+//                        walker.setNurture("양육 유무 : " + etNurture.getText().toString());
+//                        addItem(walker);
                     }
                 });
                 builder.show();
+
+
             }
         });
 
         return view;
     }
 
-    public void addItem(Walker walker) {
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+//    public void addItem(Walker walker) {
+//        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+//
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        String uid = user.getUid();
+//        Log.d("getUid",uid);
+//        mDatabase.child(uid).child("userId").setValue(walker.getId().toString());
+//        mDatabase.child(uid).child("Name").setValue(walker.getName().toString());
+//        mDatabase.child(uid).child("PassWord").setValue(walker.getPwd().toString());
+//        mDatabase.child(uid).child("Tel").setValue(walker.getTel().toString());
+//        mDatabase.child(uid).child("Address").setValue(walker.getAddr().toString());
+//        mDatabase.child(uid).child("Career").setValue(walker.getCareer().toString());
+//        mDatabase.child(uid).child("Nurture").setValue(walker.getNurture().toString());
+//
+//
+//    }
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        Log.d("getUid",uid);
-        mDatabase.child(uid).child("userId").setValue(walker.getId().toString());
-        mDatabase.child(uid).child("Name").setValue(walker.getName().toString());
-        mDatabase.child(uid).child("PassWord").setValue(walker.getPwd().toString());
-        mDatabase.child(uid).child("Tel").setValue(walker.getTel().toString());
-        mDatabase.child(uid).child("Address").setValue(walker.getAddr().toString());
-        mDatabase.child(uid).child("Career").setValue(walker.getCareer().toString());
-        mDatabase.child(uid).child("Nurture").setValue(walker.getNurture().toString());
+//    public void findAll(){
+//        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        String uid = user.getUid();
+//
+//        mDatabase.equalTo(uid).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                Log.d("mDatabase : " ,mDatabase.toString());
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        Log.d("value : " ,mDatabase.toString());
+
+
+
     }
 
-    public void findAll(){
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        Query myTopPostsQuery = mDatabase.equalTo(uid);
-        Log.d("UID",uid);
-       /* myTopPostsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)  {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.d("jinsoltest", "ValueEventListener : " + snapshot.getValue());
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
 
 
 
-    }
-
-
-
-}
 
