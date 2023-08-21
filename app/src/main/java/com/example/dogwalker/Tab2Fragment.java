@@ -16,6 +16,7 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 
@@ -97,9 +98,22 @@ public class Tab2Fragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+        InfoWindow infoWindow = new InfoWindow();
+
         Marker marker = new Marker();
         marker.setPosition(new LatLng(35.1561411,129.0594806));
         marker.setMap(naverMap);
+        marker.setOnClickListener(overlay -> {
+            ViewGroup viewGroup = (ViewGroup) getView().findViewById(R.id.fragment_container);
+            MapPoint mapPoint = new MapPoint(getContext().getApplicationContext(), viewGroup);
+
+            infoWindow.setAdapter(mapPoint);
+
+            infoWindow.setZIndex(10);
+            infoWindow.setAlpha(0.9f);
+            infoWindow.open(marker);
+            return false;
+        });
 
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource);
