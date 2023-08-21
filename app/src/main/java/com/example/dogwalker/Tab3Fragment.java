@@ -1,6 +1,7 @@
 package com.example.dogwalker;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +78,7 @@ public class Tab3Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tab3, container, false);
         Button btnInsert = view.findViewById(R.id.btnInsert);
+        Button btnLogout = view.findViewById(R.id.btnLogout);
         walkerList = new ArrayList<>();
         walkerAdapter = new WalkerAdapter(walkerList);
         recyclerView1 = view.findViewById(R.id.recyclerView1);
@@ -85,6 +88,20 @@ public class Tab3Fragment extends Fragment {
                 false);
         recyclerView1.setLayoutManager(linearLayoutManager);
         recyclerView1.setAdapter(walkerAdapter);
+
+
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String, String> loginInfo = LoginSharedPreferencesManager.getLoginInfo(view.getContext());
+                LoginSharedPreferencesManager.clearPreferences(view.getContext());
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override

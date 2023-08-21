@@ -20,7 +20,21 @@
         android:layout_height="wrap_content"
         android:src="@drawable/default_profile" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
+>
+        <Button
+            android:id="@+id/btnLogout"
+
+            android:layout_width="200dp"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:text="로그아웃"
+
+            />
         <Button
             android:id="@+id/btnInsert"
             android:layout_width="200dp"
@@ -28,6 +42,8 @@
             android:layout_gravity="bottom"
             android:text="추가"/>
 
+
+    </LinearLayout>
 
 
 
