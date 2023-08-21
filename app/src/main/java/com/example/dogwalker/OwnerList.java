@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OwnerList extends AppCompatActivity {
-    List<Walker> walkerList;
+    List<Owner> ownerList;
 
     private OwnerListAdapter ownerListAdapter;
 
@@ -22,18 +22,16 @@ public class OwnerList extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        walkerList = new ArrayList<>();
-        WalkerAdapter walkerAdapter = new WalkerAdapter(walkerList);
+        ownerList = new ArrayList<>();
+        WalkerListAdapter walkerListAdapter = new WalkerListAdapter(ownerList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager( OwnerList.this,
                 RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(walkerAdapter);
+        recyclerView.setAdapter(walkerListAdapter);
 
-        for (int i = 0; i < walkerList.size(); i++) {
+        for (int i = 0; i < ownerList.size(); i++) {
             if (i % 2 == 0) {
-                walkerList.add(new Walker(
 
-                ));
             }
         }
 
