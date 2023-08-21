@@ -30,7 +30,7 @@ public class WalkerMyPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_walker_my_page);
-        recyclerView1 = findViewById(R.id.recyclerView1);
+       // recyclerView1 = findViewById(R.id.recyclerView1);
        // recyclerView2 = findViewById(R.id.recyclerView2);
         Button btnInsert = findViewById(R.id.btnInsert);
 
@@ -47,8 +47,7 @@ public class WalkerMyPage extends AppCompatActivity {
         walkerList = new ArrayList<>();
         walkerAdapter = new WalkerAdapter(walkerList);
 
-        recyclerView1.setLayoutManager(linearLayoutManager);
-        recyclerView1.setAdapter(walkerAdapter);
+
 //        recyclerView2.setLayoutManager(linearLayoutManager1);
 //        recyclerView2.setAdapter(null);
         /*mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -85,7 +84,7 @@ public class WalkerMyPage extends AppCompatActivity {
                         walker.setAddr("주소 : " + etAddr.getText().toString());
                         walker.setCareer("산책 경력 : " + etCareer.getText().toString());
                         walker.setNurture("양육 유무 : " + etNurture.getText().toString());
-                        walkerAdapter.addItem(walker);
+                       // walkerAdapter.addItem(walker,WalkerMyPage.this);
                         Log.d("아이디 저장", LoginSharedPreferencesManager.getLoginInfo(WalkerMyPage.this).get("email"));
                     }
                 });

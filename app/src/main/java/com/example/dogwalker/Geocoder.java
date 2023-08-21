@@ -2,6 +2,7 @@ package com.example.dogwalker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,19 @@ public class Geocoder extends AppCompatActivity {
         });
 
     }
+    //부산IT교육센터
+    //부산광역시 부산진구 중앙대로 708
+    //35.1561411,129.0594806
 
+    //롯데백화점 부산본점
+    //부산광역시 부산진구 가야대로 772
+    //35.1568154, 129.0554875
+
+    //부산시청
+    //부산광역시 연제구 중앙대로 1001
+    //35.1798159, 129.0750222
+
+    @SuppressLint("SetTextI18n")
     private void requestGeocode() {
         try {
             BufferedReader bufferedReader;
@@ -64,7 +77,7 @@ public class Geocoder extends AppCompatActivity {
 
                 String line = null;
                 while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line + "\n");
+                    stringBuilder.append(line).append("\n");
                 }
 
                 int indexFirst;

@@ -19,6 +19,17 @@ public class Walker {
     public Walker() {
     }
 
+    public Walker(String name, String id, String pwd, String tel, String addr, String career, String nurture, int img) {
+        this.name = name;
+        this.id = id;
+        this.pwd = pwd;
+        this.tel = tel;
+        Addr = addr;
+        this.career = career;
+        this.nurture = nurture;
+        this.img = img;
+    }
+
     public Walker(String name, String tel) {
     }
 

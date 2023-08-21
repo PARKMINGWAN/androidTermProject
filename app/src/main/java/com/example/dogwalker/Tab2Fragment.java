@@ -2,18 +2,37 @@ package com.example.dogwalker;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
+import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.util.FusedLocationSource;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Tab2Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab2Fragment extends Fragment {
+public class Tab2Fragment extends Fragment implements OnMapReadyCallback {
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final String[] PERMISSIONS = {
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private FusedLocationSource locationSource;
+    private NaverMap naverMap;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +72,20 @@ public class Tab2Fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        NaverMapOptions options = new NaverMapOptions()
+                .camera(new CameraPosition(new LatLng(35.1568154, 129.0554875), 12));
+
+        FragmentManager fm = getParentFragmentManager();
+        MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            mapFragment = MapFragment.newInstance(options);
+            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+        }
+
+        mapFragment.getMapAsync(this);
+
+        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
     }
 
     @Override
@@ -61,4 +94,15 @@ public class Tab2Fragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tab2, container, false);
     }
+
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap) {
+        Marker marker = new Marker();
+        marker.setPosition(new LatLng(35.1561411,129.0594806));
+        marker.setMap(naverMap);
+
+        this.naverMap = naverMap;
+        naverMap.setLocationSource(locationSource);
+    }
+
 }
