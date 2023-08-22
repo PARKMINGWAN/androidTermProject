@@ -1,14 +1,13 @@
 package com.example.dogwalker;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
@@ -75,7 +74,7 @@ public class Tab2Fragment extends Fragment implements OnMapReadyCallback {
         }
 
         NaverMapOptions options = new NaverMapOptions()
-                .camera(new CameraPosition(new LatLng(35.1568154, 129.0554875), 12));
+                .camera(new CameraPosition(new LatLng(35.1561411,129.0594806), 12));
 
         FragmentManager fm = getParentFragmentManager();
         MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
