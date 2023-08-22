@@ -90,9 +90,9 @@ public class Tab1Fragment extends Fragment {
 
 
 
-        
-        
-        
+
+
+
     btnLogout=view.findViewById(R.id.btnLogout);
 btnInsert=view.findViewById(R.id.btnInsert);
 btnImgInsert=view.findViewById(R.id.btnimgInsert);
@@ -154,7 +154,7 @@ btnUpdate=view.findViewById(R.id.btnUpdate);
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALLERY_CODE)
-        {
+        {//
 
         }
     }
