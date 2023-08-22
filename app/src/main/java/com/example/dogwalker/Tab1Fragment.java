@@ -97,8 +97,14 @@ public class Tab1Fragment extends Fragment {
 
         readFirebaseValue(new FirebaseCallback1() {
             @Override
-            public void onResponse(String value) {
-               txtId.setText(value);
+            public void onResponse(Walker value) {
+                txtName.setText("이름 : "+value.getName());
+                txtId.setText("아이디 : "+value.getId());
+                txtAddr.setText("주소 : "+value.getAddr());
+                txtTel.setText("전화번호 : "+value.getTel());
+                txtPwd.setText("비밀번호 : "+value.getPwd());
+                txtCareer.setText("산책경력 : "+value.getCareer());
+                txtNurture.setText("양육 유무 : "+value.getNurture());
             }
         });
 
@@ -115,18 +121,17 @@ public class Tab1Fragment extends Fragment {
         return view;
     }
     public interface FirebaseCallback1 {
-        void onResponse(String value);
+        void onResponse(Walker value);
     }
     public void readFirebaseValue(FirebaseCallback1 callback) {
 
-        DatabaseReference uidRef = mDatabase.child(uid).child("Name");
+        DatabaseReference uidRef = mDatabase.child(uid).child("walker");
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
-                    String value = task.getResult().getValue(String.class);
-                    Log.d("리드 파이어베이스 : ",value);
-                    txtId.setText(value);
+                    Walker value = task.getResult().getValue(Walker.class);
+
                     callback.onResponse(value);
                 } else {
                     //  Log.d(TAG, task.getException().getMessage());.
