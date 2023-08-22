@@ -41,6 +41,11 @@ public class Tab3Fragment extends Fragment {
     TextView txtName, txtId, txtPwd,txtTel,txtAddr,txtCareer,txtNurture;
     String name, id, pwd, tel, addr, career, nurture;
 
+    public interface UserListCallback {
+        void onCallback(List<Walker> value);
+    }
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -113,7 +118,8 @@ public class Tab3Fragment extends Fragment {
         EditText etCareer = dialogView.findViewById(R.id.etCareer);
         EditText etNurture = dialogView.findViewById(R.id.etNurture);
 
-        findAll();
+
+
 
 
         //로그아웃
@@ -193,6 +199,7 @@ public class Tab3Fragment extends Fragment {
                         mDatabase.child(uid).child("Nurture").setValue(etNurture.getText().toString());
 
 
+
                     }
                 });
                 builder.show();
@@ -200,8 +207,12 @@ public class Tab3Fragment extends Fragment {
             }
         });
 
+        findAll() ;
+
         return view;
     }
+
+
 
 
     public void findAll() {
@@ -212,6 +223,7 @@ public class Tab3Fragment extends Fragment {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 addr =  snapshot.child(uid).child("Address").getValue().toString();
                 name =  snapshot.child(uid).child("Name").getValue().toString();
                 id =  snapshot.child(uid).child("userId").getValue().toString();
@@ -228,6 +240,7 @@ public class Tab3Fragment extends Fragment {
                 txtTel.setText(tel);
                 txtPwd.setText(pwd);
 
+
             }
 
             @Override
@@ -237,6 +250,8 @@ public class Tab3Fragment extends Fragment {
         });
 
     }
+
+
 }
 
 
