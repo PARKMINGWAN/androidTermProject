@@ -17,4 +17,6 @@
         app:navermap_zoom="12"
         app:navermap_mapType="Terrain" />
 
+
+
 </FrameLayout>
