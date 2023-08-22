@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +34,12 @@ import java.util.Map;
  */
 public class Tab3Fragment extends Fragment {
     WalkerAdapter walkerAdapter;
-    private List<Walker> walkerList;
+    public List<Walker> walkerList;
     Walker walker;
     DatabaseReference mDatabase;
 
-
+    TextView txtName, txtId, txtPwd,txtTel,txtAddr,txtCareer,txtNurture;
+    String name, id, pwd, tel, addr, career, nurture;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,17 +87,17 @@ public class Tab3Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_tab3, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab3, container, false);
         Button btnInsert = view.findViewById(R.id.btnInsert);
         Button btnLogout = view.findViewById(R.id.btnLogout);
         Button btnUpdate = view.findViewById(R.id.btnUpdate);
-        TextView txtName = view.findViewById(R.id.txtName);
-        TextView txtId = view.findViewById(R.id.txtId);
-        TextView txtPwd = view.findViewById(R.id.txtPwd);
-        TextView txtTel = view.findViewById(R.id.txtTel);
-        TextView txtAddr = view.findViewById(R.id.txtAddr);
-        TextView txtCareer = view.findViewById(R.id.txtCareer);
-        TextView txtNurture = view.findViewById(R.id.txtNurture);
+        txtName = view.findViewById(R.id.txtName);
+        txtId = view.findViewById(R.id.txtId);
+        txtPwd = view.findViewById(R.id.txtPwd);
+        txtTel = view.findViewById(R.id.txtTel);
+        txtAddr = view.findViewById(R.id.txtAddr);
+        txtCareer = view.findViewById(R.id.txtCareer);
+        txtNurture = view.findViewById(R.id.txtNurture);
 
 
         walkerList = new ArrayList<>();
@@ -113,18 +113,10 @@ public class Tab3Fragment extends Fragment {
         EditText etCareer = dialogView.findViewById(R.id.etCareer);
         EditText etNurture = dialogView.findViewById(R.id.etNurture);
 
+        findAll();
 
 
-       /* LinearLayoutManager linearLayoutManager
-                = new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL,
-                false);
-        recyclerView1.setLayoutManager(linearLayoutManager);
-        recyclerView1.setAdapter(walkerAdapter);*/
-
-      //findAll();
-
-
-
+        //로그아웃
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,10 +131,9 @@ public class Tab3Fragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setView(dialogView);
-                builder.setNegativeButton("취소",null);
+                builder.setNegativeButton("취소", null);
                 etId.setText(walker.getId());
                 etName.setText(walker.getName());
                 etPwd.setText(walker.getPwd());
@@ -178,43 +169,21 @@ public class Tab3Fragment extends Fragment {
         });
 
 
-
-
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDatabase = FirebaseDatabase.getInstance().getReference("users");
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
                 String uid = user.getUid();
-
-                //전체보기
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("snapshot : ", snapshot.toString() );
-                        //Walker value = snapshot.getValue(Walker.class);
-                        //txtAddr.setText(value.getAddr().toString());
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setView(dialogView);
-                builder.setNegativeButton("취소",null);
+                builder.setNegativeButton("취소", null);
                 etId.setText(LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
                 etPwd.setText(LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
                 builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
                         mDatabase.child(uid).child("userId").setValue(etName.getText().toString());
                         mDatabase.child(uid).child("Name").setValue(etId.getText().toString());
                         mDatabase.child(uid).child("PassWord").setValue(etPwd.getText().toString());
@@ -224,20 +193,9 @@ public class Tab3Fragment extends Fragment {
                         mDatabase.child(uid).child("Nurture").setValue(etNurture.getText().toString());
 
 
-
-//                        Walker walker = new Walker();
-//                        walker.setName("이름 : " + etName.getText().toString());
-//                        walker.setId("아이디 : "+ LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("email"));
-//                        walker.setPwd("패스워드 : " + LoginSharedPreferencesManager.getLoginInfo(view.getContext()).get("password"));
-//                        walker.setTel("전화번호 : " + etTel.getText().toString());
-//                        walker.setAddr("주소 : " + etAddr.getText().toString());
-//                        walker.setCareer("산책 경력 : " + etCareer.getText().toString());
-//                        walker.setNurture("양육 유무 : " + etNurture.getText().toString());
-//                        addItem(walker);
                     }
                 });
                 builder.show();
-
 
             }
         });
@@ -245,48 +203,41 @@ public class Tab3Fragment extends Fragment {
         return view;
     }
 
-//    public void addItem(Walker walker) {
-//        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-//
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        String uid = user.getUid();
-//        Log.d("getUid",uid);
-//        mDatabase.child(uid).child("userId").setValue(walker.getId().toString());
-//        mDatabase.child(uid).child("Name").setValue(walker.getName().toString());
-//        mDatabase.child(uid).child("PassWord").setValue(walker.getPwd().toString());
-//        mDatabase.child(uid).child("Tel").setValue(walker.getTel().toString());
-//        mDatabase.child(uid).child("Address").setValue(walker.getAddr().toString());
-//        mDatabase.child(uid).child("Career").setValue(walker.getCareer().toString());
-//        mDatabase.child(uid).child("Nurture").setValue(walker.getNurture().toString());
-//
-//
-//    }
 
-//    public void findAll(){
-//        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        String uid = user.getUid();
-//
-//        mDatabase.equalTo(uid).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Log.d("mDatabase : " ,mDatabase.toString());
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//        Log.d("value : " ,mDatabase.toString());
+    public void findAll() {
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
+        String uid = user.getUid();
 
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                addr =  snapshot.child(uid).child("Address").getValue().toString();
+                name =  snapshot.child(uid).child("Name").getValue().toString();
+                id =  snapshot.child(uid).child("userId").getValue().toString();
+                pwd =  snapshot.child(uid).child("PassWord").getValue().toString();
+                tel =  snapshot.child(uid).child("Tel").getValue().toString();
+                career =  snapshot.child(uid).child("Career").getValue().toString();
+                nurture =  snapshot.child(uid).child("Nurture").getValue().toString();
 
+                txtAddr.setText(addr);
+                txtCareer.setText(career);
+                txtName.setText(name);
+                txtId.setText(id);
+                txtNurture.setText(nurture);
+                txtTel.setText(tel);
+                txtPwd.setText(pwd);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
+}
 
 
 
