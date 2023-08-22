@@ -11,7 +11,7 @@ public class Owner {
     private String dog_walk;
     private int img;
 
-    public Owner(String id, String name, String pwd, String tel, String addr, String breed) {
+    public Owner(String id, String name, String pwd, String tel, String addr, String breed, String dog_age, String dog_walk, int img) {
         this.id = id;
         this.name = name;
         this.pwd = pwd;
@@ -98,5 +98,4 @@ public class Owner {
     public void setImg(int img) {
         this.img = img;
     }
-
 }

@@ -1,16 +1,16 @@
 package com.example.dogwalker;
 
-import android.content.DialogInterface;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,12 +24,11 @@ import java.util.List;
 public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyViewHolder> {
     DatabaseReference database;
 
-    private OwnerListAdapter ownerListAdapter;
+    List<Owner> ownerList = new ArrayList<Owner>();
 
-    private List<Owner> ownerList;
-
-    OwnerListAdapter(List<Owner> ownerList) {
+    public OwnerListAdapter(List<Owner> ownerList) {
         this.ownerList = ownerList;
+        notifyDataSetChanged();
     }
 
     public interface onItemClickListener {
@@ -42,6 +41,7 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
     }
 
     public void addItem(Owner owner) {
+        //ㅁㄴToast.makeText(,Toast.LENGTH_SHORT).show();
         database =FirebaseDatabase.getInstance().getReference("users");
 
 
@@ -59,17 +59,6 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
         ownerList.add(owner);
         notifyDataSetChanged();
 
-    }
-
-    //수정
-    private void updateItem(Owner owner, int position) {
-        Owner owner1 = ownerList.get(position);
-        owner1.setName(owner.getName());
-        owner1.setDog_age(owner.getDog_age());
-        owner1.setBreed(owner.getBreed());
-        owner1.setDog_walk(owner.getDog_walk());
-        owner1.setAddr(owner.getAddr());
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -90,46 +79,10 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
         holder.dogWalk.setText(owner.getDog_walk().toString());
         holder.addr.setText(owner.getAddr().toString());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+    /*    holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View dialogView = view.inflate(view.getContext(), R.layout.owner_list_add, null);
-                EditText dog_name = dialogView.findViewById(R.id.dog_name);
-                EditText dog_age = dialogView.findViewById(R.id.dog_age);
-                EditText dog_breed = dialogView.findViewById(R.id.dog_breed);
-                EditText dog_walk = dialogView.findViewById(R.id.dog_walk);
-                EditText dog_addr = dialogView.findViewById(R.id.dog_addr);
-                dog_name.setText(owner.getName());
-                dog_age.setText(owner.getDog_age());
-                dog_breed.setText(owner.getBreed());
-                dog_walk.setText(owner.getDog_walk());
-                dog_addr.setText(owner.getAddr());
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("반려인 프로필 수정");
-                builder.setView(dialogView);
-
-                builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Owner owner1 = new Owner(
-                                owner.getId(),
-                                dog_name.getText().toString(),
-                                dog_addr.getText().toString(),
-                                dog_breed.getText().toString(),
-                                dog_age.getText().toString(),
-                                dog_walk.getText().toString());
-                        //ownerListAdapter.updateItem(owner);
-
-                    }
-                });
-                builder.setNegativeButton("닫기", null);
-                builder.show();
-
-
-
-
-                /*String dogName = holder.dogName.getText().toString();
+                String dogName = holder.dogName.getText().toString();
                 String dogAge = holder.dogAge.getText().toString();
                 String dogBreed = holder.dogBreed.getText().toString();
                 String dogWalk = holder.dogWalk.getText().toString();
@@ -137,9 +90,9 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
 
                 Intent intent;
                 intent = new Intent(view.getContext(), OwnerList.class);
-                view.getContext().startActivity(intent);*/
+                view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override

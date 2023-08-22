@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class ContentPagerAdapter extends FragmentStateAdapter {
-    private int mPageCount = 3;
+    private int mPageCount = 4;
     public ContentPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -19,12 +19,19 @@ public class ContentPagerAdapter extends FragmentStateAdapter {
             case 0:
                 Tab1Fragment tab1Fragment = new Tab1Fragment();
                 return tab1Fragment;
+
             case 1:
+
                 Tab2Fragment tab2Fragment = new Tab2Fragment();
                 return tab2Fragment;
+
             case 2:
                 Tab3Fragment tab3Fragment = new Tab3Fragment();
                 return tab3Fragment;
+            case 3 :
+                Tab4Fragment tab4Fragment = new Tab4Fragment();
+                return  tab4Fragment;
+
             default : return null;
 
         }
