@@ -79,11 +79,6 @@ public class OwnerList extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"addItem 진입",Toast.LENGTH_SHORT).show();
                         ownerListAdapter.addItem(owner);
 
-
-
-
-
-
                     }
                 });
                 builder.setNegativeButton("닫기", null);
@@ -94,14 +89,7 @@ public class OwnerList extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
-    }
+}
 
 
 
