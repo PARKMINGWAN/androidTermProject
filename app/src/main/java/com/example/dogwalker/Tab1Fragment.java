@@ -1,33 +1,34 @@
 package com.example.dogwalker;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.loader.content.CursorLoader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Gallery;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,16 +37,17 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class Tab1Fragment extends Fragment {
+    List<Owner> ownerList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private OwnerListAdapter ownerListAdapter;
+    EditText dog_name, dog_age, dog_breed, dog_walk, dog_addr;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     DatabaseReference mDatabase;
     TextView txtName, txtId, txtPwd,txtTel,txtAddr,txtCareer,txtNurture;
     String uid;
-    Button btnImgInsert, btnUpdate, btnLogout,btnInsert;
-    private static final  int GALLERY_CODE = 10 ;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -88,85 +90,86 @@ public class Tab1Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
 
+        //Button btnLogout = view.findViewById(R.id.btnLogout);
 
-
-
-
-
-    btnLogout=view.findViewById(R.id.btnLogout);
-btnInsert=view.findViewById(R.id.btnInsert);
-btnImgInsert=view.findViewById(R.id.btnimgInsert);
-btnUpdate=view.findViewById(R.id.btnUpdate);
-
-
-        txtName = view.findViewById(R.id.txtName);
-        txtId = view.findViewById(R.id.txtId);
-        txtPwd = view.findViewById(R.id.txtPwd);
-        txtTel = view.findViewById(R.id.txtTel);
-        txtAddr = view.findViewById(R.id.txtAddr);
-        txtCareer = view.findViewById(R.id.txtCareer);
-        txtNurture = view.findViewById(R.id.txtNurture);
+//        txtName = view.findViewById(R.id.txtName);
+//        txtId = view.findViewById(R.id.txtId);
+//        txtPwd = view.findViewById(R.id.txtPwd);
+//        txtTel = view.findViewById(R.id.txtTel);
+//        txtAddr = view.findViewById(R.id.txtAddr);
+//        txtCareer = view.findViewById(R.id.txtCareer);
+//        txtNurture = view.findViewById(R.id.txtNurture);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
         uid = user.getUid();
 
-   btnImgInsert.setOnClickListener(new View.OnClickListener() {
-
-
-       @Override
-       public void onClick(View view) {
-           Intent intent = new Intent(Intent.ACTION_PICK);
-           intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-
-           startActivityForResult(intent, GALLERY_CODE);
-       }
-   });
-
 
         readFirebaseValue(new FirebaseCallback1() {
             @Override
             public void onResponse(Walker value) {
-                txtName.setText("이름 : "+value.getName());
-                txtId.setText("아이디 : "+value.getId());
-                txtAddr.setText("주소 : "+value.getAddr());
-                txtTel.setText("전화번호 : "+value.getTel());
-                txtPwd.setText("비밀번호 : "+value.getPwd());
-                txtCareer.setText("산책경력 : "+value.getCareer());
-                txtNurture.setText("양육 유무 : "+value.getNurture());
+//                txtName.setText("이름 : "+value.getName());
+//                txtId.setText("아이디 : "+value.getId());
+//                txtAddr.setText("주소 : "+value.getAddr());
+//                txtTel.setText("전화번호 : "+value.getTel());
+//                txtPwd.setText("비밀번호 : "+value.getPwd());
+//                txtCareer.setText("산책경력 : "+value.getCareer());
+//                txtNurture.setText("양육 유무 : "+value.getNurture());
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        FloatingActionButton floatBtn = view.findViewById(R.id.floatBtn);
+
+        ownerList = new ArrayList<Owner>();
+        ownerListAdapter = new OwnerListAdapter(ownerList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( view.getContext(),
+                RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(ownerListAdapter);
+
+        floatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, String> loginInfo = LoginSharedPreferencesManager.getLoginInfo(view.getContext());
-                LoginSharedPreferencesManager.clearPreferences(view.getContext());
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
+                addContact();
             }
         });
+
+
 
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALLERY_CODE)
-        {//
+    private void addContact() {
+        View dialogView = LayoutInflater.from(getContext()).
+                inflate(R.layout.owner_list_add, null);
+        dog_name = dialogView.findViewById(R.id.dog_name);
+        dog_age = dialogView.findViewById(R.id.dog_age);
+        dog_breed = dialogView.findViewById(R.id.dog_breed);
+        dog_walk = dialogView.findViewById(R.id.dog_walk);
+        dog_addr = dialogView.findViewById(R.id.dog_addr);
 
-        }
-    }
-    public String getPath(Uri uri)
-    {
-String [] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader cursorLoader = new CursorLoader(getContext(),uri,proj,null,null,null);
-        Cursor cursor = cursorLoader.loadInBackground();
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToNext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("반려인 프로필 등록");
+        builder.setView(dialogView);
+        builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Owner owner = new Owner();
+                owner.setName("이름 : " + dog_name.getText().toString());
+                owner.setDog_age("" + "(" + dog_age.getText().toString() + "살" + ")");
+                owner.setBreed("견종 : " + dog_breed.getText().toString());
+                owner.setDog_walk("산책 시간 : " + dog_walk.getText().toString() + "분");
+                owner.setAddr("주소 : " + dog_addr.getText().toString());
 
-        return  cursor.getString(index);
+                Log.d("onewr name : ", owner.getName().toString() );
+                Toast.makeText(getContext(),"addItem 진입",Toast.LENGTH_SHORT).show();
+                ownerListAdapter.addItem(owner);
+
+            }
+        });
+        builder.setNegativeButton("닫기", null);
+        builder.show();
     }
 
     public interface FirebaseCallback1 {
