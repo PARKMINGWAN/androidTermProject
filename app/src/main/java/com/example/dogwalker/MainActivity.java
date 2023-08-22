@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }else { //로그인상태
-            Intent intent = new Intent(MainActivity.this, MainActivity_tab.class);
+           Intent intent = new Intent(MainActivity.this, MainActivity_tab.class);
 
             startActivity(intent);
             btnSignPage.setVisibility(View.GONE);
