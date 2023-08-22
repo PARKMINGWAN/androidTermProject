@@ -8,17 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,9 +33,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class Tab3Fragment extends Fragment {
-
-
-
     WalkerAdapter walkerAdapter;
     public List<Walker> walkerList;
     Walker walker;
@@ -56,7 +49,6 @@ public class Tab3Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String uid;
 
     public Tab3Fragment() {
         // Required empty public constructor
@@ -106,9 +98,8 @@ public class Tab3Fragment extends Fragment {
         txtAddr = view.findViewById(R.id.txtAddr);
         txtCareer = view.findViewById(R.id.txtCareer);
         txtNurture = view.findViewById(R.id.txtNurture);
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
-       uid = user.getUid();
+
+
         walkerList = new ArrayList<>();
         walkerAdapter = new WalkerAdapter(walkerList);
 
@@ -122,16 +113,7 @@ public class Tab3Fragment extends Fragment {
         EditText etCareer = dialogView.findViewById(R.id.etCareer);
         EditText etNurture = dialogView.findViewById(R.id.etNurture);
 
-        //findAll();
-
-        readFirebaseValue(new FirebaseCallback() {
-            @Override
-            public void onResponse(String value) {
-                Log.d("콜백 아이디 : ",value.toString());
-                txtName.setText(value.toString());
-
-            }
-        });
+        findAll();
 
 
         //로그아웃
@@ -202,23 +184,14 @@ public class Tab3Fragment extends Fragment {
                 builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       /* mDatabase.child(uid).child("userId").setValue(etName.getText().toString());
+                        mDatabase.child(uid).child("userId").setValue(etName.getText().toString());
                         mDatabase.child(uid).child("Name").setValue(etId.getText().toString());
                         mDatabase.child(uid).child("PassWord").setValue(etPwd.getText().toString());
                         mDatabase.child(uid).child("Address").setValue(etAddr.getText().toString());
                         mDatabase.child(uid).child("Tel").setValue(etTel.getText().toString());
                         mDatabase.child(uid).child("Career").setValue(etCareer.getText().toString());
-                        mDatabase.child(uid).child("Nurture").setValue(etNurture.getText().toString());*/
-                        Walker walker1 = new Walker();
-                        walker1.setNurture(etNurture.getText().toString());
-                        walker1.setAddr(etAddr.getText().toString());
-                        walker1.setTel(etTel.getText().toString());
-                        walker1.setPwd(etPwd.getText().toString());
-                        walker1.setCareer(etCareer.getText().toString());
-                        walker1.setId(etName.getText().toString());
-                        walker1.setName(etId.getText().toString());
+                        mDatabase.child(uid).child("Nurture").setValue(etNurture.getText().toString());
 
-                        mDatabase.child(uid).child("walker").setValue(walker1);
 
                     }
                 });
@@ -231,15 +204,12 @@ public class Tab3Fragment extends Fragment {
     }
 
 
-
-
-
     public void findAll() {
-
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
         String uid = user.getUid();
 
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 addr =  snapshot.child(uid).child("Address").getValue().toString();
@@ -258,9 +228,6 @@ public class Tab3Fragment extends Fragment {
                 txtTel.setText(tel);
                 txtPwd.setText(pwd);
 
-
-
-
             }
 
             @Override
@@ -269,26 +236,6 @@ public class Tab3Fragment extends Fragment {
             }
         });
 
-    }
-    public interface FirebaseCallback {
-        void onResponse(String value);
-    }
-    public void readFirebaseValue(FirebaseCallback callback) {
-
-        DatabaseReference uidRef = mDatabase.child(uid).child("Name");
-        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    String value = task.getResult().getValue(String.class);
-                    Log.d("리드 파이어베이스 : ",value);
-                    txtId.setText(value);
-                    callback.onResponse(value);
-                } else {
-                  //  Log.d(TAG, task.getException().getMessage());
-                }
-            }
-        });
     }
 }
 
