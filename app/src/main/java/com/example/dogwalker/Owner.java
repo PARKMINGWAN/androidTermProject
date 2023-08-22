@@ -1,5 +1,8 @@
 package com.example.dogwalker;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Owner {
     private String id;
     private String name;
@@ -11,6 +14,9 @@ public class Owner {
     private String dog_walk;
     private int img;
 
+    public Owner() {
+    }
+
     public Owner(String id, String name, String pwd, String tel, String addr, String breed, String dog_age, String dog_walk, int img) {
         this.id = id;
         this.name = name;
@@ -21,10 +27,6 @@ public class Owner {
         this.dog_age = dog_age;
         this.dog_walk = dog_walk;
         this.img = img;
-    }
-
-    public Owner() {
-
     }
 
     public String getId() {

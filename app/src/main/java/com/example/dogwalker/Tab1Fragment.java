@@ -95,7 +95,7 @@ public class Tab1Fragment extends Fragment {
         uid = user.getUid();
 
 
-        readFirebaseValue(new FirebaseCallback1() {
+       /* readFirebaseValue(new FirebaseCallback1() {
             @Override
             public void onResponse(Walker value) {
                 txtName.setText("이름 : "+value.getName());
@@ -106,7 +106,7 @@ public class Tab1Fragment extends Fragment {
                 txtCareer.setText("산책경력 : "+value.getCareer());
                 txtNurture.setText("양육 유무 : "+value.getNurture());
             }
-        });
+        });*/
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
