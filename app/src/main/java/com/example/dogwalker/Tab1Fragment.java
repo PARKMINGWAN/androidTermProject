@@ -1,16 +1,23 @@
 package com.example.dogwalker;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.CursorLoader;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,7 +44,8 @@ public class Tab1Fragment extends Fragment {
     DatabaseReference mDatabase;
     TextView txtName, txtId, txtPwd,txtTel,txtAddr,txtCareer,txtNurture;
     String uid;
-
+    Button btnImgInsert, btnUpdate, btnLogout,btnInsert;
+    private static final  int GALLERY_CODE = 10 ;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -80,7 +88,16 @@ public class Tab1Fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
 
-       Button btnLogout = view.findViewById(R.id.btnLogout);
+
+
+        
+        
+        
+    btnLogout=view.findViewById(R.id.btnLogout);
+btnInsert=view.findViewById(R.id.btnInsert);
+btnImgInsert=view.findViewById(R.id.btnimgInsert);
+btnUpdate=view.findViewById(R.id.btnUpdate);
+
 
         txtName = view.findViewById(R.id.txtName);
         txtId = view.findViewById(R.id.txtId);
@@ -93,6 +110,18 @@ public class Tab1Fragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();  //현재 로그인된 사용자
         uid = user.getUid();
+
+   btnImgInsert.setOnClickListener(new View.OnClickListener() {
+
+
+       @Override
+       public void onClick(View view) {
+           Intent intent = new Intent(Intent.ACTION_PICK);
+           intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+
+           startActivityForResult(intent, GALLERY_CODE);
+       }
+   });
 
 
         readFirebaseValue(new FirebaseCallback1() {
@@ -120,6 +149,26 @@ public class Tab1Fragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GALLERY_CODE)
+        {
+
+        }
+    }
+    public String getPath(Uri uri)
+    {
+String [] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(getContext(),uri,proj,null,null,null);
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToNext();
+
+        return  cursor.getString(index);
+    }
+
     public interface FirebaseCallback1 {
         void onResponse(Walker value);
     }
