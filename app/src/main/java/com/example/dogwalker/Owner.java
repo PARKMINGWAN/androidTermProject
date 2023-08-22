@@ -23,6 +23,10 @@ public class Owner {
         this.img = img;
     }
 
+    public Owner() {
+
+    }
+
     public String getId() {
         return id;
     }
@@ -83,7 +87,7 @@ public class Owner {
         return dog_walk;
     }
 
-    public void setDog_walker(String dog_walk) {
+    public void setDog_walk(String dog_walk) {
         this.dog_walk = dog_walk;
     }
 
