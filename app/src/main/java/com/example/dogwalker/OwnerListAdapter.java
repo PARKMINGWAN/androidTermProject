@@ -24,6 +24,7 @@ import java.util.List;
 public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyViewHolder> {
     DatabaseReference database;
 
+    String id, name, pwd, tel, addr, breed, dog_age, dog_walk;
     List<Owner> ownerList = new ArrayList<Owner>();
 
     public OwnerListAdapter(List<Owner> ownerList) {
@@ -41,21 +42,15 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
     }
 
     public void addItem(Owner owner) {
-        //ㅁㄴToast.makeText(,Toast.LENGTH_SHORT).show();
-        database =FirebaseDatabase.getInstance().getReference("users");
-
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        Log.d("uid check : ", uid);
-       // Toast.makeText(context,"addItem 함수실행",Toast.LENGTH_SHORT).show();
-        database.child(uid).child("Name").setValue(owner.getName().toString());
-        database.child(uid).child("dog_Age").setValue(owner.getDog_age().toString());
-        database.child(uid).child("Breed").setValue(owner.getBreed().toString());
-        database.child(uid).child("dog_Walk").setValue(owner.getDog_walk().toString());
-        database.child(uid).child("dog_Addr").setValue(owner.getAddr().toString());
+        //Toast.makeText(,Toast.LENGTH_SHORT).show();
+        database =FirebaseDatabase.getInstance().getReference("list");
+        String key = database.push().getKey();
+        database.child("owner").child(key).child("Name").setValue(owner.getName().toString());
+        database.child("owner").child(key).child("Dog_age").setValue(owner.getDog_age().toString());
+        database.child("owner").child(key).child("Breed").setValue(owner.getBreed().toString());
+        database.child("owner").child(key).child("Dog_walk").setValue(owner.getDog_walk().toString());
+        database.child("owner").child(key).child("Addr").setValue(owner.getAddr().toString());
         Log.d("onwer check : ", owner.getAddr().toString());
-        //Toast.makeText(context,"addItem 함수",Toast.LENGTH_SHORT).show();
         ownerList.add(owner);
         notifyDataSetChanged();
 
@@ -79,20 +74,7 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
         holder.dogWalk.setText(owner.getDog_walk().toString());
         holder.addr.setText(owner.getAddr().toString());
 
-    /*    holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String dogName = holder.dogName.getText().toString();
-                String dogAge = holder.dogAge.getText().toString();
-                String dogBreed = holder.dogBreed.getText().toString();
-                String dogWalk = holder.dogWalk.getText().toString();
-                String addr = holder.addr.getText().toString();
 
-                Intent intent;
-                intent = new Intent(view.getContext(), OwnerList.class);
-                view.getContext().startActivity(intent);
-            }
-        });*/
     }
 
     @Override
@@ -123,13 +105,5 @@ public class OwnerListAdapter extends RecyclerView.Adapter<OwnerListAdapter.MyVi
 
         }
 
-/*        void onBind(Owner owner) {
-            dogName.setText(owner.getName());
-            dogAge.setText(owner.getDog_age());
-            dogBreed.setText(owner.getBreed());
-            dogWalk.setText(owner.getDog_walk());
-            addr.setText(owner.getAddr());
-            imgOwner.setImageResource(owner.getImg());
-        }*/
     }
 }

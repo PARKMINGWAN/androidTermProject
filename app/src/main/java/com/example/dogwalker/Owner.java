@@ -17,6 +17,17 @@ public class Owner {
     public Owner() {
     }
 
+    public Owner(String id, String name, String pwd, String tel, String addr, String breed, String dog_age, String dog_walk) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+        this.tel = tel;
+        this.addr = addr;
+        this.breed = breed;
+        this.dog_age = dog_age;
+        this.dog_walk = dog_walk;
+    }
+
     public Owner(String id, String name, String pwd, String tel, String addr, String breed, String dog_age, String dog_walk, int img) {
         this.id = id;
         this.name = name;
