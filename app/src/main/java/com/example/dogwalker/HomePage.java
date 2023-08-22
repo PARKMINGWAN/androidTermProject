@@ -30,7 +30,8 @@ public class HomePage extends AppCompatActivity {
         btnWalker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent2 = new Intent(getApplicationContext(), WalkerList.class);
+                startActivity(intent2);
             }
         });
 
