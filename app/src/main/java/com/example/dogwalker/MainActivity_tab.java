@@ -24,7 +24,7 @@ public class MainActivity_tab extends AppCompatActivity {
     RecyclerView recyclerView;
     private List<Walker> walkerList;
     WalkerAdapter walkerAdapter;
-
+    Tab3Fragment tab3Fragment;
 
 
     @Override
@@ -40,7 +40,7 @@ public class MainActivity_tab extends AppCompatActivity {
                 = new ContentPagerAdapter(this);
         viewPager2.setAdapter(contentPagerAdapter);
 
-        List<String> tabElement = Arrays.asList("Home","Map","WalkerProfile","MyPage2");
+        List<String> tabElement = Arrays.asList("Home","Map","MyPage","MyPage2");
 
         //tabLayout viewPager2를 연결
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
