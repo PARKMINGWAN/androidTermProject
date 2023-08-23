@@ -10,7 +10,7 @@ import android.widget.Button;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+//깃테스트
     Button btnJoinPage;
     Button btnSignPage;
     Button btnLogout;
