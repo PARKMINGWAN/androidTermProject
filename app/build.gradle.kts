@@ -33,6 +33,14 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+    implementation("com.google.firebase:firebase-storage")
+    implementation ("androidx.activity:activity-compose:1.7.1")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-video:2.3.0")
+    implementation("io.coil-kt:coil-gif:2.3.0")
     implementation("com.google.firebase:firebase-analytics")
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
     implementation("androidx.appcompat:appcompat:1.6.1")

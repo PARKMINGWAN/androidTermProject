@@ -26,8 +26,8 @@ public class ContentPagerAdapter extends FragmentStateAdapter {
                 return tab2Fragment;
 
             case 2:
-                Tab3Fragment tab3Fragment = new Tab3Fragment();
-                return tab3Fragment;
+                TabWalkerProfileFragment tabWalkerProfileFragment = new TabWalkerProfileFragment();
+                return tabWalkerProfileFragment;
             case 3 :
                 Tab4Fragment tab4Fragment = new Tab4Fragment();
                 return  tab4Fragment;
